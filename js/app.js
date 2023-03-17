@@ -1,5 +1,101 @@
-/*******************INICIO*****************/
-class App {
+//*********BUTTONS*********/
+
+class Button {
+    constructor(parentID, text, className) {
+        this.parentID = parentID;
+        this.text = text;
+        this.className = className;
+    }
+
+    render() {
+        let myApp = document.getElementById(this.parentID);
+
+        let buttonContainer = document.createElement("div");
+        buttonContainer.className = "justify-content mt-2 mx-auto border border-primary";
+        myApp.append(buttonContainer);
+
+        let myButtonHTML = document.createElement("button");
+        myButtonHTML.setAttribute("type", "button"); //implicito en el elemento
+        myButtonHTML.className = this.className;
+        myButtonHTML.innerHTML = this.text;
+
+        buttonContainer.append(myButtonHTML);
+    }
+}
+const manyButtons = ["Login", "Close", "Visit", "Register"];
+
+function renderButton(text) {
+    let newButton = new Button("app", text, "btn btn-primary"); //lo que esta en el constructor
+    newButton.render();
+}
+
+//Funcion donde el parametro es un array, lo guardo en una variable y luego la llamo
+function obtenerLogin(manyButtons) {
+    let arr = manyButtons.filter(element => element === "Login").forEach(element => renderButton(element));
+    return arr;
+}
+obtenerLogin(manyButtons);
+
+
+
+//**********INPUTS**************/
+class Input {
+    constructor(parentID, type) {
+        this.parentID = parentID;
+        this.type = type;
+    }
+
+    render() {
+        let myApp = document.getElementById(this.parentID);
+
+        let InputContainer = document.createElement("div");
+        InputContainer.className = "justify-content m-4 mx-auto border border-primary";
+        myApp.append(InputContainer);
+
+
+        let myInputHTML = document.createElement("input");
+        myInputHTML.setAttribute("type", this.type);
+
+        InputContainer.append(myInputHTML);
+    }
+}
+
+function renderInput(type) {
+    let input_type = "none";
+
+    switch (type) {
+        case "password":
+            input_type = "password";
+            break;
+        case "date":
+            input_type = "date";
+            break;
+        case "number":
+            input_type = "number";
+            break;
+        default:
+            input_type = "text";
+            break;
+    }
+    let someInput = new Input("app", input_type);
+    someInput.render();
+}
+
+const manyInputs = ["text", "password", "date", "number", "text", "text"];
+
+//Mostrar cada input
+//manyInputs.forEach(element => renderInput(element));
+
+//Funcion que espera un array, lo guardo en una variable y luego la llamo
+function obtenerInputs(manyInputs) {
+    let arr = manyInputs.filter(element => element === "date").forEach(element => renderInput(element));
+    return arr;
+}
+obtenerInputs(manyInputs);
+
+//**********FORMULARIO**************/
+
+class Formulario {
     constructor(parentID, className) {
         this.parentID = parentID;
         this.className = className;
@@ -7,134 +103,32 @@ class App {
 
     render() {
         let myApp = document.getElementById(this.parentID);
-        myApp.className = this.className;
-    }
-}
+        myApp.className = "container mx-auto d-flex flex-column";
 
-/***********FORMULARIO*************/
-class Form {
-    constructor(parentID, elementID, className) {
-        this.parentID = parentID;
-        this.elementID = elementID;
-        this.className = className;
-    }
+        let formContainer = document.createElement("div");
+        formContainer.className = "p-5 justify-content w-50 mx-auto border border-primary bg-light";
+        myApp.append(formContainer);
 
-    render() {
-        let myApp = document.getElementById(this.parentID);
         let myFormHTML = document.createElement("form");
-        myFormHTML.setAttribute("class", this.className);
+        myFormHTML.className = this.className;
+        formContainer.append(myFormHTML);
 
-        myApp.append(myFormHTML);
-    }
-}
-/***********BOTON*************/
-
-class Button {
-    constructor(parentID, text) {
-        this.parentID = parentID;
-        this.text = text;
-    }
-
-    render() {
-        let myForm = document.getElementById(this.parentID);
-        let myButtonHTML = document.createElement("button");
-        myButtonHTML.setAttribute("type", "button");
-        myButtonHTML.setAttribute("class", "btn btn-secondary");
-        myButtonHTML.innerHTML = this.text;
-
-        myForm.append(myButtonHTML);
-
-        myButtonHTML.addEventListener('click', (e) => {
-            e.preventDefault();
-            const myInput = document.querySelector("input");
-            let mensaje = document.createElement("div");
-
-            mensaje.setAttribute("id", "texto");
-            mensaje.className = "alert alert-success w-50 position-absolute top-50 start-50 translate-middle";
-            mensaje.textContent = myInput.value
-            myApp.append(mensaje);
-
-            mensaje.addEventListener('click', function () {
-                mensaje.remove();
-            });
-        });
     }
 }
 
-/***********INPUT*************/
 
-class Input {
-    constructor(parentID, type, elementID) {
-        this.parentID = parentID;
-        // if type != opciones validas... entonces poner un valor por default.
-        this.type = type;
-        this.elementID = elementID;
-    }
+const manyForms = ["form1", "form2", "form3", "form4"];
 
-    render() {
-        let myForm = document.getElementById(this.parentID);
-        let myInputHTML = document.createElement("input");
-        myInputHTML.setAttribute("type", this.type);
-        myInputHTML.setAttribute("class", "form-control");
-        myInputHTML.setAttribute("id", this.elementID);
-        myInputHTML.setAttribute("placeholder", "Rellenar casilla de " + this.type);
-
-        const data = document.querySelectorAll("input").value;
-        //console.log(data);
-
-        myForm.append(myInputHTML);
-    }
+function renderForm() {
+    let newForm = new Formulario("app", "form bg-light p-5 border border-primary");
+    newForm.render();
 }
 
-//Inicio dandoole forma al contenedor "App".
-const myApp = new App("app", "container my-4 p-4 bg-light w-50");
+//manyForms.forEach(element => renderForm(element));
 
-//Dibujar el formulario
-const miFormulario = new Form("app", "myForm", "form-group row");
-
-/***********************/
-/***********************/
-
-//Dibujar los inputs
-const myInput = new Input("app", "text", "myInput");
-
-let mySuperArrayofTypes = ["text", "password", "email", "number", "text", "text"];
-
-function RenderInput(type) {
-    let myInput = new Input("app", type, "myInput");
-    myInput.render();
+//Funcion que espera un array, lo guardo en una variable y luego la llamo
+function obtenerForm(manyForms) {
+    let arr = manyForms.filter(element => element === "form1").forEach(element => renderForm(element));
+    return arr;
 }
-
-//Mostrar cada input
-mySuperArrayofTypes.forEach(element => RenderInput(element));
-
-//Seleccionar por busqueda
-const filtrarInputs = mySuperArrayofTypes.filter(element => element === "text").forEach(element => RenderInput(element));
-console.log(filtrarInputs);
-
-/***********************/
-/***********************/
-
-//Dibujar los botones
-const myButton = new Button("app", "Login");
-
-//Array con botones
-let mySuperArrayofStrings = ["Login", "Signup", "Reset", "Cancel"];
-
-function RenderButton(text) {
-    let myButton = new Button("app", text);
-    myButton.render();
-}
-//Mostrar cada boton 
-mySuperArrayofStrings.forEach(element => RenderButton(element));  //Lento
-
-//Seleccionar por busqueda
-const filtrarBotones = mySuperArrayofStrings.filter(element => element === "Login").forEach(element => RenderButton(element)); //Rapido
-console.log(filtrarBotones);
-
-
-
-
-
-
-
+obtenerForm(manyForms);
