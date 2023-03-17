@@ -2,5 +2,5 @@
 
 #Ejercicio
 
->* Un campo Input que se dibuje a partir de un array de elementos. :x:
->* Usar filter... para reducir la cantidad de elementos del array a dibujar. :x:
+>* Un campo Input que se dibuje a partir de un array de elementos. :heavy_check_mark:	
+>* Usar filter... para reducir la cantidad de elementos del array a dibujar. :heavy_check_mark:	
